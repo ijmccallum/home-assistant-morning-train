@@ -1,0 +1,113 @@
+<div class="p-2">
+{% if states.sensor.train_schedule_dun_edb and (states.sensor.train_schedule_dun_edb.attributes.trains | length) == 0 %}
+  No Trains
+{% else %}
+
+  {% for train in states.sensor.train_schedule_dun_edb.attributes.trains %}
+    <div class="w-100 mb-3 flex items-center"> {# BEGIN TRAIN! #}
+      {# Countdown in mins? #}
+      <div class="text-center pr-2">
+        Departing in<br />
+        (TODO)
+      </div>
+      <div class="flex-grow mb-3 border-b-1"> {# STOP VIEW #}
+        <div class="text-center w-100">The <b>{{ train.terminus }}</b> train</div>
+        <div class="flex justify-between w-100"> {# STATIONS #}
+          <div class="flex"> {# DUNBAR #}
+            {% if train.platform == '1' %}
+              <div class="border-t-2 border-l-2 border-b-8 p-2">{{ train.platform }}</div>
+            {% endif %}
+
+            <div class="px-2 border-b-8">
+              <div>Dunbar</div>
+              <div>{{ as_timestamp(train.scheduled) | timestamp_custom('%I:%M %p') }}</div>
+              {% if train.perturbation %}
+                <div class="text-red-500">{{ as_timestamp(train.expected) | timestamp_custom('%I:%M %p') }}</div>
+              {% endif %}
+            </div>
+
+            {% if train.platform == '2' %}
+              <div class="border-t-2 border-r-2 border-b-8 p-2">{{ train.platform }}</div>
+            {% endif %}
+          </div> {# END DUNBAR #}
+
+          {% for dest in train.destinations %}
+            <div class="px-2 border-b-8">
+              {{ dest.name }}<br />
+              {{ as_timestamp(dest.time_at_destination) | timestamp_custom('%I:%M %p') }}
+            </div>
+          {% endfor %}
+        </div> {# END STATIONS #}
+      </div> {# END STOP VIEW #}
+
+    </div> {# END TRAIN! #}
+  {% endfor %}
+
+{% endif %}
+</div>
+
+
+<script>
+function countdownTimer(timeString) {
+  // Parse the time string into a Date object
+  const targetTime = new Date(timeString);
+
+  // Get the current time
+  const currentTime = new Date();
+
+  // Calculate the time difference in milliseconds
+  const timeDiff = targetTime.getTime() - currentTime.getTime();
+
+  // Check if the target time has already passed
+  if (timeDiff <= 0) {
+    console.log("Target time has already passed.");
+    return;
+  }
+
+  // Start the countdown
+  const countdownInterval = setInterval(() => {
+    // Calculate the remaining time in seconds
+    const remainingSeconds = Math.floor(timeDiff / 1000);
+
+    // Format the remaining time
+    const hours = Math.floor(remainingSeconds / 3600);
+    const minutes = Math.floor((remainingSeconds % 3600) / 60);
+    const seconds = remainingSeconds % 60;
+
+    // Display the countdown
+    console.log(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+
+    // Decrement the time difference by 1 second
+    timeDiff -= 1000;
+
+    // Check if the countdown has reached zero
+    if (timeDiff <= 0) {
+      clearInterval(countdownInterval);
+      console.log("Countdown finished!");
+    }
+  }, 1000);
+}
+
+// Example usage
+countdownTimer("2024-06-14 15:01:00+01:00");
+</script>
+
+<div class="p-2">
+{% if states.sensor.train_schedule_dun_edb and (states.sensor.train_schedule_dun_edb.attributes.trains | length) == 0 %}
+  No Trains
+{% else %}
+
+  {% for train in states.sensor.train_schedule_dun_edb.attributes.trains %}
+    <div class="w-100 mb-3 text-center"> {# BEGIN TRAIN! #}
+      <div class="w-100">Next <b>{{ train.terminus }}</b> train</div>
+      <div class="">Platform {{ train.platform }}</div>
+      <div>{{ as_timestamp(train.scheduled) | timestamp_custom('%I:%M %p') }}</div>
+      {{train.expected}}
+      {% if train.perturbation %}
+        <div class="text-red-500">{{ as_timestamp(train.expected) | timestamp_custom('%I:%M %p') }}</div>
+      {% endif %}
+    </div> {# END TRAIN! #}
+  {% endfor %}
+
+{% endif %}
+</div>

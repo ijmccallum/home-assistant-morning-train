@@ -1,0 +1,84 @@
+<script>
+function countdownTimer(timeString) {
+  // Parse the time string into a Date object
+  const targetTime = new Date(timeString);
+
+  // Get the current time
+  const currentTime = new Date();
+
+  // Calculate the time difference in milliseconds
+  const timeDiff = targetTime.getTime() - currentTime.getTime();
+
+  // Check if the target time has already passed
+  if (timeDiff <= 0) {
+    console.log("Target time has already passed.");
+    return;
+  }
+
+  // Start the countdown
+  const countdownInterval = setInterval(() => {
+    // Calculate the remaining time in seconds
+    const remainingSeconds = Math.floor(timeDiff / 1000);
+
+    // Format the remaining time
+    const hours = Math.floor(remainingSeconds / 3600);
+    const minutes = Math.floor((remainingSeconds % 3600) / 60);
+    const seconds = remainingSeconds % 60;
+
+    // Display the countdown
+    console.log(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+
+    // Decrement the time difference by 1 second
+    timeDiff -= 1000;
+
+    // Check if the countdown has reached zero
+    if (timeDiff <= 0) {
+      clearInterval(countdownInterval);
+      console.log("Countdown finished!");
+    }
+  }, 1000);
+}
+</script>
+
+<script>
+function updateTime() {
+  const currentTime = new Date().toLocaleTimeString();
+  console.log('currentTime', currentTime);
+  document.getElementById('current-time').textContent = currentTime;
+}
+
+setInterval(updateTime, 1000);
+</script>
+
+
+<div class="p-2">
+Edinburgh Trains
+<div id="current-time" class="text-xl font-black">TIME NOW</div>
+{% if states.sensor.train_schedule_dun_edb and (states.sensor.train_schedule_dun_edb.attributes.trains | length) == 0 %}
+  No Trains
+{% else %}
+{{states.sensor.time}}
+  {% for train in states.sensor.train_schedule_dun_edb.attributes.trains %}
+    <div class="w-100 my-6"> {# BEGIN TRAIN! #}
+      <div class="text-xl font-black">{{ as_timestamp(train.scheduled) | timestamp_custom('%I:%M %p') }}</div>
+      {% if train.platform == '1' %}
+        <div class="text-xl text-green-500">Platform <span class="font-black">{{ train.platform }}</span></div>
+      {% endif %}
+      {% if train.platform == '2' %}
+        <div class="text-xl text-red-500">Platform <span class="font-black">{{ train.platform }}</span></div>
+      {% endif %}
+
+      <div class="w-100 text-xs text-slate-500">Terminates at <b>{{ train.terminus }}</b></div>
+
+
+      <script>
+      countdownTimer({{train.expected}});
+      </script>
+      {% if train.perturbation %}
+        <div class="text-red-500">{{ as_timestamp(train.expected) | timestamp_custom('%I:%M %p') }}</div>
+      {% endif %}
+    </div> {# END TRAIN! #}
+  {% endfor %}
+
+{% endif %}
+</div>

@@ -1,0 +1,37 @@
+{
+  "name": "rollup-ts-lit-starter",
+  "version": "1.0.0",
+  "description": "Basic Building Blocks to build a Home Assistan/Users/gpeeters/work/personal/cards/www/cards/power-distribution/LICENSEt Card using Rollup, TS and Lit",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:js": "rollup -c",
+    "build:css": "tailwindcss -i ./src/styles/src.css -o ./src/styles/dist.css",
+    "watch": "rollup -c --watch",
+    "format": "biome format --fix",
+    "start:hass": "docker run --rm -p8123:8123 -v ${PWD}/.hass_dev:/config homeassistant/home-assistant:beta",
+    "start:hass-cmd": "docker run --rm -p8123:8123 -v  %cd%/.hass_dev:/config homeassistant/home-assistant:beta"
+  },
+  "author": "Gil Peeters",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "rollup": "^4.9.1",
+    "rollup-plugin-filesize": "^10.0.0",
+    "rollup-plugin-serve": "^1.1.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "custom-card-helpers": "^1.9.0",
+    "lit": "^3.1.0",
+    "rollup-plugin-import-css": "^3.5.0",
+    "tailwindcss": "^3.4.4"
+  }
+}
