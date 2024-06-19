@@ -32,10 +32,14 @@ export class TrainCard extends LitElement {
   @state() _time: string = "__:__:__";
   private _clock_is_ticking: boolean = false;
   private _hass: any | undefined;
+  private _time_to_station_normal: string = "";
+  private _time_to_station_fast: string = "";
 
   setConfig(config: TrainCardConfig) {
     this._title = config.title;
     this._element_id = config.element_id;
+    this._time_to_station_normal = config.time_to_station_normal;
+    this._time_to_station_fast = config.time_to_station_fast;
     if (this._hass) {
       this.hass = this._hass;
     }
