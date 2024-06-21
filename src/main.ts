@@ -1,15 +1,9 @@
-declare global {
-  interface Window {
-    customCards: Array<Object>;
-  }
-}
-
 import { CUSTOM_CARD_ID } from "./common";
-import { TrainCard } from "./card";
-import { TrainCardEditor } from "./editor";
+import { TrainCard } from "./card/card";
+import { TrainCardEditor } from "./editor/editor";
 
 customElements.define(CUSTOM_CARD_ID, TrainCard);
-customElements.define(CUSTOM_CARD_ID + "-editor", TrainCardEditor);
+customElements.define(`${CUSTOM_CARD_ID}-editor`, TrainCardEditor);
 
 window.customCards = window.customCards || [];
 window.customCards.push({
