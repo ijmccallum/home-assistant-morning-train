@@ -3,12 +3,8 @@ import type { LovelaceCardConfig } from "custom-card-helpers";
 export interface TrainCardConfig extends LovelaceCardConfig {
   title: string;
   element_id: string;
-  time_to_station_normal_hours: string;
   time_to_station_normal_mins: string;
-  time_to_station_normal_secs: string;
-  time_to_station_fast_hours: string;
   time_to_station_fast_mins: string;
-  time_to_station_fast_secs: string;
 }
 
 export type HAEntity = {

@@ -42,15 +42,11 @@ const trainTime = ({
 
 export const trainElement = ({
   train,
-  time_to_station_normal_hours,
   time_to_station_normal_mins,
-  time_to_station_rush_hours,
   time_to_station_rush_mins,
 }: {
   train: Train;
-  time_to_station_normal_hours: string;
   time_to_station_normal_mins: string;
-  time_to_station_rush_hours: string;
   time_to_station_rush_mins: string;
 }) => {
   return html`
@@ -76,7 +72,7 @@ export const trainElement = ({
     <div>
       ${countdown(train.expected)}
     </div>
-    <div>Normal: ${time_to_station_normal_hours}:${time_to_station_normal_mins}</div>
-    <div>Rush: ${time_to_station_rush_hours}:${time_to_station_rush_mins}</div>
+    <div>Normal: ${time_to_station_normal_mins} mins</div>
+    <div>Rush: ${time_to_station_rush_mins} mins</div>
   `;
 };

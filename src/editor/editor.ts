@@ -8,6 +8,7 @@ import type {
 } from "custom-card-helpers";
 import styles from "../styles/dist.css";
 import { textField } from "./textField";
+import { switchField } from "./checkboxField";
 import { durationField } from "./durationField";
 import { loadEntityPicker, entityPicker } from "./entityPicker";
 
@@ -22,20 +23,49 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
   }
 
   setConfig(config: TrainCardConfig): void {
+    console.log("setting config", config);
     this._config = config;
     // Preload the HA Entity Picker
     loadEntityPicker();
   }
 
   _change(ev: Event) {
-    const target = ev.target as HTMLInputElement;
+    console.log("--- Begin change handler");
     ev.stopPropagation();
-    // this._config is readonly, copy needed
-    const newValue: string | undefined = target.value;
-    if (newValue === this._config[target.id]) return;
+    const target = ev.target as HTMLInputElement;
+
+    const newValue: string | boolean | undefined = (() => {
+      if (target.tagName === "HA-SWITCH") return target.checked;
+      return target.value;
+    })();
+    const currentConfigValue = this._config[target.id];
+
+    console.log("target", target);
+    console.log("target.nodeType", target.nodeType);
+    console.log("target.tagName", target.tagName);
+    console.log("target.checked", target.checked);
+    console.log("newValue", newValue);
+    console.log("target.id", target.id);
+    console.log("this._config[target.id]", this._config[target.id]);
+
+    if (newValue === currentConfigValue) {
+      // No change
+      console.log("No change");
+      return;
+    }
+
     const newConfig = Object.assign({}, this._config);
-    if (newValue === "" || newValue === undefined) delete newConfig[target.id];
-    else newConfig[target.id] = target.value;
+    if (newValue === "" || newValue === undefined) {
+      console.log("newValue empty, deleting from config", target.id);
+      delete newConfig[target.id];
+      return;
+    }
+
+    newConfig[target.id] = newValue;
+    console.log(
+      "Dispatching config-changed event with new config: ",
+      newConfig,
+    );
     const messageEvent = new CustomEvent("config-changed", {
       detail: { config: newConfig },
       bubbles: true,
@@ -47,7 +77,24 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
   static styles = css`${unsafeCSS(styles)}`;
 
   render() {
-    return html`<div class="grid grid-cols-3 gap-4">
+    console.log("this._config", this._config);
+    return html`<div class="grid grid-cols-2 gap-4">
+      <div>
+        ${switchField({
+          id: "show_title",
+          value: this._config.show_title,
+          label: "Show Title?",
+          change: this._change,
+        })}
+      </div>
+      <div>
+        ${switchField({
+          id: "show_clock",
+          value: this._config.show_clock,
+          label: "Show Clock?",
+          change: this._change,
+        })}
+      </div>
       <div class="col-span-2">
         ${textField({ name: "title", label: "Title", required: false, value: this._config.title || "", change: this._change })}
       </div>
@@ -60,34 +107,18 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
           value: this._config.element_id ?? "",
         })}
       </div>
-      <div class="col-span-3">
-        <p>Time to Station: normal.</p>
+      <div class="col-span-2">
+        <p>How long does it take to get to the Station? (in minutes)</p>
       </div>
       ${durationField({
         change: this._change,
-        label: "hours",
-        id: "time_to_station_normal_hours",
-        value: this._config.time_to_station_normal_hours ?? "",
-      })}
-      ${durationField({
-        change: this._change,
-        label: "mins",
+        label: "Relaxed pace",
         id: "time_to_station_normal_mins",
         value: this._config.time_to_station_normal_mins ?? "",
       })}
-
-      <div class="col-span-3">
-        <p>Time to Station: rushing.</p>
-      </div>
       ${durationField({
         change: this._change,
-        label: "hours",
-        id: "time_to_station_rush_hours",
-        value: this._config.time_to_station_rush_hours ?? "",
-      })}
-      ${durationField({
-        change: this._change,
-        label: "mins",
+        label: "When you're in a rush",
         id: "time_to_station_rush_mins",
         value: this._config.time_to_station_rush_mins ?? "",
       })}
