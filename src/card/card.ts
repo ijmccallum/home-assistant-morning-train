@@ -8,6 +8,7 @@ import type {
   HASS,
 } from "../types";
 import styles from "../styles/dist.css";
+import { cardHeader } from "./cardHeader";
 import { formatTime } from "../utils/formatTime";
 import { trainElement } from "./train";
 
@@ -25,7 +26,6 @@ export class TrainCard extends LitElement {
   private _show_title = true;
 
   setConfig(config: TrainCardConfig) {
-    console.log("setConfig", config);
     this._title = config.title;
     this._train_schedule_entity_id = config.element_id;
     this._time_to_station_normal_mins = config.time_to_station_normal_mins;
@@ -67,9 +67,8 @@ export class TrainCard extends LitElement {
 
   static styles = css`${unsafeCSS(styles)}`;
   render() {
-    // console.log("this._show_clock", this._show_clock);
-    // console.log("this._show_title", this._show_title);
     this._beginClock();
+
     const title = () => {
       if (this._title) {
         return this._title;
@@ -83,10 +82,16 @@ export class TrainCard extends LitElement {
       return "Pick a train station";
     };
 
+    const header = cardHeader({
+      title: title(),
+      time: this._time,
+      show_title: this._show_title,
+      show_clock: this._show_clock,
+    });
+
     return html`<ha-card>
       <div class="w-100 grid grid-cols-2 gap-8 p-4">
-        <div class="text-xl">${this._show_title ? title() : ""}</div>
-        <div class="text-xl text-right">${this._show_clock ? this._time : ""}</div>
+        ${header}
         ${this._train_schedule?.attributes.trains.map((train) => {
           if (train.expected === "Cancelled") {
             return html`
@@ -105,7 +110,6 @@ export class TrainCard extends LitElement {
           });
         })}
       </div>
-      
     </ha-card> `;
   }
 }

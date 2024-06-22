@@ -23,14 +23,12 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
   }
 
   setConfig(config: TrainCardConfig): void {
-    console.log("setting config", config);
     this._config = config;
     // Preload the HA Entity Picker
     loadEntityPicker();
   }
 
   _change(ev: Event) {
-    console.log("--- Begin change handler");
     ev.stopPropagation();
     const target = ev.target as HTMLInputElement;
 
@@ -40,32 +38,18 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
     })();
     const currentConfigValue = this._config[target.id];
 
-    console.log("target", target);
-    console.log("target.nodeType", target.nodeType);
-    console.log("target.tagName", target.tagName);
-    console.log("target.checked", target.checked);
-    console.log("newValue", newValue);
-    console.log("target.id", target.id);
-    console.log("this._config[target.id]", this._config[target.id]);
-
     if (newValue === currentConfigValue) {
       // No change
-      console.log("No change");
       return;
     }
 
     const newConfig = Object.assign({}, this._config);
     if (newValue === "" || newValue === undefined) {
-      console.log("newValue empty, deleting from config", target.id);
       delete newConfig[target.id];
       return;
     }
 
     newConfig[target.id] = newValue;
-    console.log(
-      "Dispatching config-changed event with new config: ",
-      newConfig,
-    );
     const messageEvent = new CustomEvent("config-changed", {
       detail: { config: newConfig },
       bubbles: true,
@@ -77,7 +61,6 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
   static styles = css`${unsafeCSS(styles)}`;
 
   render() {
-    console.log("this._config", this._config);
     return html`<div class="grid grid-cols-2 gap-4">
       <div>
         ${switchField({
