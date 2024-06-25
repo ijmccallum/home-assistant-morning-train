@@ -105,6 +105,14 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
         id: "time_to_station_rush_mins",
         value: this._config.time_to_station_rush_mins ?? "",
       })}
+      <div class="col-span-2 pt-3">
+        ${switchField({
+          id: "show_terminates_at",
+          value: this._config.show_terminates_at,
+          label: "Show Terminates at?",
+          change: this._change,
+        })}
+      </div>
     </div> `;
   }
 }

@@ -25,6 +25,7 @@ export class TrainCard extends LitElement {
   private _time_to_station_rush_mins = "";
   private _show_clock = true;
   private _show_title = true;
+  private _show_terminates_at = true;
 
   setConfig(config: TrainCardConfig) {
     this._title = config.title;
@@ -33,6 +34,7 @@ export class TrainCard extends LitElement {
     this._time_to_station_rush_mins = config.time_to_station_rush_mins;
     this._show_clock = config.show_clock;
     this._show_title = config.show_title;
+    this._show_terminates_at = config.show_terminates_at;
 
     if (this._hass) {
       this.hass = this._hass;
@@ -133,6 +135,7 @@ export class TrainCard extends LitElement {
             train,
             time_to_station_normal_mins: this._time_to_station_normal_mins,
             time_to_station_rush_mins: this._time_to_station_rush_mins,
+            show_terminates_at: this._show_terminates_at,
           });
         })}
       </div>

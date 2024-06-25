@@ -45,10 +45,12 @@ export const trainElement = ({
   train,
   time_to_station_normal_mins,
   time_to_station_rush_mins,
+  show_terminates_at,
 }: {
   train: Train;
   time_to_station_normal_mins: string;
   time_to_station_rush_mins: string;
+  show_terminates_at: boolean;
 }) => {
   return html`
     <div>
@@ -66,9 +68,15 @@ export const trainElement = ({
         Platform <span class="font-black">${train.platform}</span>
       </div>
 
-      <div class="w-100 text-xs text-slate-500">
-        Terminates at <b>${train.terminus}</b>
-      </div>
+      ${
+        show_terminates_at
+          ? html`
+            <div class="w-100 text-xs text-slate-500">
+              Terminates at <b>${train.terminus}</b>
+            </div>
+          `
+          : ""
+      }
     </div>
     <div>
       ${countdown(train.expected)}
