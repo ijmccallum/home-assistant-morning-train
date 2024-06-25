@@ -102,7 +102,10 @@ export class TrainCard extends LitElement {
       </ha-card>`;
     }
 
-    if (this._train_schedule.attributes.trains.length === 0) {
+    if (
+      !this._train_schedule.attributes.trains ||
+      this._train_schedule.attributes.trains.length === 0
+    ) {
       return html`<ha-card>
         <div class="w-100 grid grid-cols-2 gap-8 p-4">
           ${header}
@@ -111,6 +114,7 @@ export class TrainCard extends LitElement {
       </ha-card>`;
     }
 
+    console.log("4");
     return html`<ha-card>
       <div class="w-100 grid grid-cols-2 gap-8 p-4">
         ${header}

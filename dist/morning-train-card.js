@@ -86,12 +86,7 @@ const lt={attribute:!0,type:String,converter:$,reflect:!1,hasChanged:v},ht=(t=lt
   `;class ft extends rt{constructor(){super(...arguments),this._title="",this._train_schedule=null,this._train_entity=null,this._time="__:__:__",this._clock_is_ticking=!1,this._train_schedule_entity_id="",this._time_to_station_normal_mins="",this._time_to_station_rush_mins="",this._show_clock=!0,this._show_title=!0,this._beginClock=()=>{this._clock_is_ticking||(this._clock_is_ticking=!0,setInterval(this._tickClock,1e3))},this._tickClock=()=>{const t=new Date;this._time=ut(t,!0)}}setConfig(t){this._title=t.title,this._train_schedule_entity_id=t.element_id,this._time_to_station_normal_mins=t.time_to_station_normal_mins,this._time_to_station_rush_mins=t.time_to_station_rush_mins,this._show_clock=t.show_clock,this._show_title=t.show_title,this._hass&&(this.hass=this._hass)}set hass(t){this._hass=t,this._train_schedule_entity_id&&(this._train_schedule=t.states[this._train_schedule_entity_id],this._train_entity=t.entities[this._train_schedule_entity_id])}static getConfigElement(){return document.createElement(`${t}-editor`)}render(){var t;this._beginClock();const e=(({title:t,time:e,show_title:n,show_clock:i})=>n||i?q`
     <div class="text-xl">${n?t:""}</div>
     <div class="text-xl text-right">${i?e:""}</div>
-  `:q``)({title:(()=>{var t;return this._title?this._title:(null===(t=this._train_entity)||void 0===t?void 0:t.friendly_name)?this._train_entity.friendly_name:this._train_schedule?this._train_schedule.entity_id:"Pick a train station"})(),time:this._time,show_title:this._show_title,show_clock:this._show_clock});return this._train_schedule?this._train_schedule.attributes?0===this._train_schedule.attributes.trains.length?q`<ha-card>
-        <div class="w-100 grid grid-cols-2 gap-8 p-4">
-          ${e}
-          <div class="col-span-2 text-center">No more trains for now.</div>
-        </div>
-      </ha-card>`:q`<ha-card>
+  `:q``)({title:(()=>{var t;return this._title?this._title:(null===(t=this._train_entity)||void 0===t?void 0:t.friendly_name)?this._train_entity.friendly_name:this._train_schedule?this._train_schedule.entity_id:"Pick a train station"})(),time:this._time,show_title:this._show_title,show_clock:this._show_clock});return this._train_schedule?this._train_schedule.attributes?this._train_schedule.attributes.trains&&0!==this._train_schedule.attributes.trains.length?(console.log("4"),q`<ha-card>
       <div class="w-100 grid grid-cols-2 gap-8 p-4">
         ${e}
         ${null===(t=this._train_schedule)||void 0===t?void 0:t.attributes.trains.map((t=>"Cancelled"===t.expected?q`
@@ -103,7 +98,12 @@ const lt={attribute:!0,type:String,converter:$,reflect:!1,hasChanged:v},ht=(t=lt
               </div>
             `:mt({train:t,time_to_station_normal_mins:this._time_to_station_normal_mins,time_to_station_rush_mins:this._time_to_station_rush_mins})))}
       </div>
-    </ha-card> `:q`<ha-card>
+    </ha-card> `):q`<ha-card>
+        <div class="w-100 grid grid-cols-2 gap-8 p-4">
+          ${e}
+          <div class="col-span-2 text-center">No more trains for now.</div>
+        </div>
+      </ha-card>`:q`<ha-card>
         ${_t("No train schedule attributes.")}
       </ha-card>`:q`<ha-card>
         ${_t("No train schedule object.")}
