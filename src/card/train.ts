@@ -1,6 +1,7 @@
 import { countdown } from "./countdown";
 import { html } from "lit";
 import { formatTime } from "../utils/formatTime";
+import { runWalkChill } from "./runWalkChill";
 
 type Train = {
   scheduled: string;
@@ -72,7 +73,10 @@ export const trainElement = ({
     <div>
       ${countdown(train.expected)}
     </div>
-    <div>Normal: ${time_to_station_normal_mins} mins</div>
-    <div>Rush: ${time_to_station_rush_mins} mins</div>
+    <div>${runWalkChill({
+      expected: train.expected,
+      time_to_station_normal_mins,
+      time_to_station_rush_mins,
+    })}</div>
   `;
 };

@@ -11,6 +11,7 @@ import styles from "../styles/dist.css";
 import { cardHeader } from "./cardHeader";
 import { formatTime } from "../utils/formatTime";
 import { trainElement } from "./train";
+import { errorUI } from "./error";
 
 export class TrainCard extends LitElement {
   @state() _title = "";
@@ -88,6 +89,27 @@ export class TrainCard extends LitElement {
       show_title: this._show_title,
       show_clock: this._show_clock,
     });
+
+    if (!this._train_schedule) {
+      return html`<ha-card>
+        ${errorUI("No train schedule object.")}
+      </ha-card>`;
+    }
+
+    if (!this._train_schedule.attributes) {
+      return html`<ha-card>
+        ${errorUI("No train schedule attributes.")}
+      </ha-card>`;
+    }
+
+    if (this._train_schedule.attributes.trains.length === 0) {
+      return html`<ha-card>
+        <div class="w-100 grid grid-cols-2 gap-8 p-4">
+          ${header}
+          <div class="col-span-2 text-center">No more trains for now.</div>
+        </div>
+      </ha-card>`;
+    }
 
     return html`<ha-card>
       <div class="w-100 grid grid-cols-2 gap-8 p-4">

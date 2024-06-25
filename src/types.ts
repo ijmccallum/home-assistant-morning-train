@@ -21,18 +21,16 @@ export type HAEntity = {
 export type TrainScheduleState = {
   entity_id: string;
   attributes: {
-    trains: [
-      {
-        scheduled: string;
-        platform: string;
-        /** Final stop. "This train will terminate at ... " */
-        terminus: string;
-        /** If true the train is delayed */
-        perturbation: boolean;
-        /** Time, will be different from Scheduled if the train is feeling perturbed  */
-        expected: string | "Cancelled";
-      },
-    ];
+    trains: {
+      scheduled: string;
+      platform: string;
+      /** Final stop. "This train will terminate at ... " */
+      terminus: string;
+      /** If true the train is delayed */
+      perturbation: boolean;
+      /** Time, will be different from Scheduled if the train is feeling perturbed  */
+      expected: string | "Cancelled";
+    }[];
   };
 } | null;
 
