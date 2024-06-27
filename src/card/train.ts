@@ -45,11 +45,13 @@ export const trainElement = ({
   train,
   time_to_station_normal_mins,
   time_to_station_rush_mins,
+  ideal_mins_waiting_at_station,
   show_terminates_at,
 }: {
   train: Train;
   time_to_station_normal_mins: string;
   time_to_station_rush_mins: string;
+  ideal_mins_waiting_at_station: string;
   show_terminates_at: boolean;
 }) => {
   return html`
@@ -78,13 +80,12 @@ export const trainElement = ({
           : ""
       }
     </div>
-    <div>
-      ${countdown(train.expected)}
-    </div>
-    <div>${runWalkChill({
+    ${countdown(train.expected)}
+    ${runWalkChill({
       expected: train.expected,
       time_to_station_normal_mins,
       time_to_station_rush_mins,
-    })}</div>
+      ideal_mins_waiting_at_station,
+    })}
   `;
 };

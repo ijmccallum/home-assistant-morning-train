@@ -52,11 +52,11 @@ This project uses the MIT License, reason being the [ha-custom-card-rollup-ts-li
 
 ## TODOs
 
-1. add the time to the train station configuraiton options.
+1. time config - Set different travel times for different (variable) platforms
 2. Add setting up different train stations
 3. Full local dev process - get it running!
 4. docs - update this readme
 5. Guidance for setting up the national rail integraiton (also move the national rail integration into this repo so it's an all in one?)
 6. Easier HA install process for people looking to use this
-7. Add configuration options: pick train stations, set regular and fast time to get to the station.
+7. Add configuration options: pick train stations
 8. Add screenshots to the readme

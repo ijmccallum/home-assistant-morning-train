@@ -1,6 +1,6 @@
 import { html } from "lit";
 
-const formatCountdown = (seconds: number) => {
+export const formatCountdown = (seconds: number) => {
   const hours = formatDigits(Math.floor(seconds / 3600));
   const minutes = formatDigits(Math.floor((seconds % 3600) / 60));
   const remainingSeconds = formatDigits(seconds % 60);
@@ -30,14 +30,8 @@ export const countdown = (expected: string) => {
   );
 
   return html`
-    <div>
-      Countdown<br />
-      <span class="text-2xl font-black">
+    <div class="text-2xl font-black text-center">
       ${formatCountdown(seconds)}
-      </span>
-    </div>
-    <div class="font-black">
-      Chill
     </div>
   `;
 };

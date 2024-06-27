@@ -23,6 +23,7 @@ export class TrainCard extends LitElement {
   private _train_schedule_entity_id = "";
   private _time_to_station_normal_mins = "";
   private _time_to_station_rush_mins = "";
+  private _ideal_mins_waiting_at_station = "";
   private _show_clock = true;
   private _show_title = true;
   private _show_terminates_at = true;
@@ -32,6 +33,7 @@ export class TrainCard extends LitElement {
     this._train_schedule_entity_id = config.element_id;
     this._time_to_station_normal_mins = config.time_to_station_normal_mins;
     this._time_to_station_rush_mins = config.time_to_station_rush_mins;
+    this._ideal_mins_waiting_at_station = config.ideal_mins_waiting_at_station;
     this._show_clock = config.show_clock;
     this._show_title = config.show_title;
     this._show_terminates_at = config.show_terminates_at;
@@ -52,7 +54,6 @@ export class TrainCard extends LitElement {
     this._train_entity = hass.entities[this._train_schedule_entity_id];
   }
 
-  // card configuration
   static getConfigElement() {
     return document.createElement(`${CUSTOM_CARD_ID}-editor`);
   }
@@ -109,16 +110,15 @@ export class TrainCard extends LitElement {
       this._train_schedule.attributes.trains.length === 0
     ) {
       return html`<ha-card>
-        <div class="w-100 grid grid-cols-2 gap-8 p-4">
+        <div class="w-100 grid grid-cols-3 gap-8 p-4">
           ${header}
-          <div class="col-span-2 text-center">No more trains for now.</div>
+          <div class="col-span-3 text-center">No more trains for now.</div>
         </div>
       </ha-card>`;
     }
 
-    console.log("4");
     return html`<ha-card>
-      <div class="w-100 grid grid-cols-2 gap-8 p-4">
+      <div class="w-100 grid grid-cols-3 gap-8 p-4">
         ${header}
         ${this._train_schedule?.attributes.trains.map((train) => {
           if (train.expected === "Cancelled") {
@@ -135,6 +135,7 @@ export class TrainCard extends LitElement {
             train,
             time_to_station_normal_mins: this._time_to_station_normal_mins,
             time_to_station_rush_mins: this._time_to_station_rush_mins,
+            ideal_mins_waiting_at_station: this._ideal_mins_waiting_at_station,
             show_terminates_at: this._show_terminates_at,
           });
         })}
