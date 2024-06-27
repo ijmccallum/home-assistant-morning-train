@@ -1,11 +1,5 @@
 # HA Custom Card Starter
 
-TODO:
-
-- turn card into train card
-- get tailwindcss working
-- update readme
-
 This is a starter repository for creating a custom card for HA (HA).
 
 It uses the following technologies:

@@ -1,8 +1,8 @@
 mode: storage
 dashboards:
-  my-lit-card:
+  morning-train-card:
     mode: yaml
     title: Showcase
     icon: mdi:window-maximize
     show_in_sidebar: true
-    filename: my-lit-card.yaml
+    filename: morning-train-card.yaml
