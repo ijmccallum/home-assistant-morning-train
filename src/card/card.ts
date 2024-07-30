@@ -110,24 +110,30 @@ export class TrainCard extends LitElement {
       this._train_schedule.attributes.trains.length === 0
     ) {
       return html`<ha-card>
-        <div class="w-100 grid grid-cols-3 gap-8 p-4">
+        <div class="w-100 grid grid-cols-4 gap-2 p-4">
           ${header}
-          <div class="col-span-3 text-center">No more trains for now.</div>
+          <div class="col-span-4 text-center">No more trains for now.</div>
         </div>
       </ha-card>`;
     }
 
     return html`<ha-card>
-      <div class="w-100 grid grid-cols-3 gap-8 p-4">
+      <div class="w-100 grid grid-cols-4 gap-2 p-4 text-left">
+
         ${header}
+
+        <div class="column-2">👤</div>
+        <div class="column-1">TRAIN</div>
+        <div class="column-4">DEPARTING</div>
+        <div class="column-3">PLATFORM</div>
+
         ${this._train_schedule?.attributes.trains.map((train) => {
           if (train.expected === "Cancelled") {
             return html`
-              <div class="text-xl text-red-500 font-black">
+              <div class="text-xl text-red-500 font-black col-span-4">
                 <div class="line-through">
-                  ${formatTime(train.scheduled, false)}
+                  ${formatTime(train.scheduled, false)} Cancelled
                 </div>
-                <div>Cancelled</div>
               </div>
             `;
           }

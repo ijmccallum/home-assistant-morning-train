@@ -22,15 +22,13 @@ const trainTime = ({
 }) => {
   if (perturbation) {
     return html`
-        <div class="text-xl">
-          <div class="text-yellow-500">⚠️Delayed⚠️</div>
-          <span class="line-through">
-            ${formatTime(scheduled, false)}
-          </span>
-          &nbsp;
-          <span class="text-red-500 font-black">
+        <div class="text-xl text-yellow-500">
+          <div class="line-through">
+           ⚠${formatTime(scheduled, false)}
+          </div>
+          <div class="font-black">
             ${formatTime(expected, false)}
-          </span>
+          </div>
         </div>
       `;
   }
@@ -54,22 +52,23 @@ export const trainElement = ({
   ideal_mins_waiting_at_station: string;
   show_terminates_at: boolean;
 }) => {
+  //4 cols
   return html`
-    <div>
+    <div class="column-1">
+      ${runWalkChill({
+        expected: train.expected,
+        time_to_station_normal_mins,
+        time_to_station_rush_mins,
+        ideal_mins_waiting_at_station,
+      })}
+    </div>
+
+    <div class="column-2">
       ${trainTime({
         scheduled: train.scheduled,
         perturbation: train.perturbation,
         expected: train.expected,
       })}
-
-      <div
-        class="text-xl ${
-          train.platform === "1" ? "text-green-500" : "text-red-500"
-        }"
-      >
-        Platform <span class="font-black">${train.platform}</span>
-      </div>
-
       ${
         show_terminates_at
           ? html`
@@ -80,12 +79,14 @@ export const trainElement = ({
           : ""
       }
     </div>
-    ${countdown(train.expected)}
-    ${runWalkChill({
-      expected: train.expected,
-      time_to_station_normal_mins,
-      time_to_station_rush_mins,
-      ideal_mins_waiting_at_station,
-    })}
+    
+    <div class="column-3 font-black text-xl">
+      ${countdown(train.expected)}
+    </div>
+
+    <div class="column-4 font-black text-xl ${train.platform === "1" ? "text-green-500" : "text-red-500"}">
+      ${train.platform}
+    </div>
+
   `;
 };

@@ -30,7 +30,7 @@ export const countdown = (expected: string) => {
   );
 
   return html`
-    <div class="text-2xl font-black text-center">
+    <div class="text-xl font-black">
       ${formatCountdown(seconds)}
     </div>
   `;

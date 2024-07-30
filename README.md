@@ -62,3 +62,27 @@ This project uses the MIT License, reason being the [ha-custom-card-rollup-ts-li
 6. Guidance for setting up the national rail integraiton (also move the national rail integration into this repo so it's an all in one?)
 7. Easier HA install process for people looking to use this
 8. Add configuration options: pick train stations
+
+
+Tabs!
+Galaxy Tab A9 - £169
+Lenovo Tab M10 (3rd Gen) - £180 <<<< £146.99
+
+docker run -d \
+  --name grampsweb_celery \
+  --restart always \
+  -p 8091:5000 \
+  -e GRAMPSWEB_TREE="Gramps Web" \
+  -e GRAMPSWEB_CELERY_CONFIG__broker_url=redis://grampsweb_redis:6379/0 \
+  -e GRAMPSWEB_CELERY_CONFIG__result_backend=redis://grampsweb_redis:6379/0 \
+  -e GRAMPSWEB_RATELIMIT_STORAGE_URI=redis://grampsweb_redis:6379/1 \
+  -v /DATA/AppData/gramps/gramps_users:/app/users \
+  -v /DATA/AppData/gramps/gramps_index:/app/indexdir \
+  -v /DATA/AppData/gramps/gramps_thumb_cache:/app/thumbnail_cache \
+  -v /DATA/AppData/gramps/gramps_cache:/app/cache \
+  -v /DATA/AppData/gramps/gramps_secret:/app/secret \
+  -v /DATA/AppData/gramps/gramps_db:/root/.gramps/grampsdb \
+  -v /DATA/AppData/gramps/gramps_media:/app/media \
+  -v /DATA/AppData/gramps/gramps_tmp:/tmp \
+  --link grampsweb_redis \
+  ghcr.io/gramps-project/grampsweb:latest
