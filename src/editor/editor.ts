@@ -106,7 +106,16 @@ export class TrainCardEditor extends LitElement implements LovelaceCardEditor {
         value: this._config.time_to_station_rush_mins ?? "",
       })}
       <div class="col-span-2">
-        <p>How many minutes before the train do you like to arrive at the station?</p>
+        <p>What is the longest you'd be ok with waiting at the station?</p>
+      </div>
+      ${durationField({
+        change: this._change,
+        label: "Longest wait time at the station in mins",
+        id: "longest_mins_waiting_at_station",
+        value: this._config.longest_mins_waiting_at_station ?? "",
+      })}
+      <div class="col-span-2">
+        <p>What is the shortest time you'd be ok with waiting at the station?</p>
       </div>
       ${durationField({
         change: this._change,

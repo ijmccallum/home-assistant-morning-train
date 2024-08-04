@@ -1,23 +1,26 @@
 import { html } from "lit";
 
 export const formatCountdown = (seconds: number) => {
-  const hours = formatDigits(Math.floor(seconds / 3600));
-  const minutes = formatDigits(Math.floor((seconds % 3600) / 60));
+  if (Number.isNaN(seconds)) {
+    return "__:__:__";
+  }
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
   const remainingSeconds = formatDigits(seconds % 60);
 
-  if (hours === "-1") {
+  if (hours === -1) {
     return "Gone";
   }
 
-  if (hours === "00" && minutes === "00") {
-    return html`${remainingSeconds}`;
+  if (hours === 0 && minutes === 0) {
+    return html`__:__:${remainingSeconds}`;
   }
 
-  if (hours === "00") {
-    return html`${minutes}:${remainingSeconds}`;
+  if (hours === 0) {
+    return html`__:${minutes}:${remainingSeconds}`;
   }
 
-  return html`${hours}:${minutes}:${remainingSeconds}`;
+  return html`${hours}:${formatDigits(minutes)}:${remainingSeconds}`;
 };
 
 const formatDigits = (num: number) => {
@@ -30,7 +33,7 @@ export const countdown = (expected: string) => {
   );
 
   return html`
-    <div class="text-xl font-black">
+    <div class="">
       ${formatCountdown(seconds)}
     </div>
   `;

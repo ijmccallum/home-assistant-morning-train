@@ -24,6 +24,7 @@ export class TrainCard extends LitElement {
   private _time_to_station_normal_mins = "";
   private _time_to_station_rush_mins = "";
   private _ideal_mins_waiting_at_station = "";
+  private _longest_mins_waiting_at_station = "";
   private _show_clock = true;
   private _show_title = true;
   private _show_terminates_at = true;
@@ -34,6 +35,8 @@ export class TrainCard extends LitElement {
     this._time_to_station_normal_mins = config.time_to_station_normal_mins;
     this._time_to_station_rush_mins = config.time_to_station_rush_mins;
     this._ideal_mins_waiting_at_station = config.ideal_mins_waiting_at_station;
+    this._longest_mins_waiting_at_station =
+      config.longest_mins_waiting_at_station;
     this._show_clock = config.show_clock;
     this._show_title = config.show_title;
     this._show_terminates_at = config.show_terminates_at;
@@ -118,22 +121,24 @@ export class TrainCard extends LitElement {
     }
 
     return html`<ha-card>
-      <div class="w-100 grid grid-cols-4 gap-2 p-4 text-left">
+      <div class="w-100 grid grid-cols-4 gap-2 grid-cols-[3fr_3fr_2fr_1fr] items-center p-4 text-center text-4xl">
 
         ${header}
 
-        <div class="column-2">👤</div>
-        <div class="column-1">TRAIN</div>
-        <div class="column-4">DEPARTING</div>
-        <div class="column-3">PLATFORM</div>
+        <div class="column-1 text-base">TRAIN</div>
+        <div class="column-2 text-base">DEPARTING</div>
+        <div class="column-3 text-base">YOU</div>
+        <div class="column-4 text-base">PLAT</div>
 
         ${this._train_schedule?.attributes.trains.map((train) => {
           if (train.expected === "Cancelled") {
             return html`
-              <div class="text-xl text-red-500 font-black col-span-4">
-                <div class="line-through">
-                  ${formatTime(train.scheduled, false)} Cancelled
-                </div>
+              <div class="col-span-4 border-b border-slate-500"></div>
+              <div class="text-red-500 line-through">
+                  ${formatTime(train.scheduled, false)}
+              </div>
+              <div class="text-red-500 col-span-3">
+                Cancelled
               </div>
             `;
           }
@@ -142,6 +147,8 @@ export class TrainCard extends LitElement {
             time_to_station_normal_mins: this._time_to_station_normal_mins,
             time_to_station_rush_mins: this._time_to_station_rush_mins,
             ideal_mins_waiting_at_station: this._ideal_mins_waiting_at_station,
+            longest_mins_waiting_at_station:
+              this._longest_mins_waiting_at_station,
             show_terminates_at: this._show_terminates_at,
           });
         })}
