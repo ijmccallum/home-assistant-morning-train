@@ -8,6 +8,7 @@
     "build:js": "rollup -c",
     "build:css": "tailwindcss -i ./src/styles/src.css -o ./src/styles/dist.css",
     "watch": "rollup -c --watch",
+    "demo": "npm run watch",
     "format": "biome format --fix",
     "start:hass": "docker run --rm -p8123:8123 -v ${PWD}/.hass_dev:/config homeassistant/home-assistant:beta",
     "start:hass-cmd": "docker run --rm -p8123:8123 -v  %cd%/.hass_dev:/config homeassistant/home-assistant:beta"

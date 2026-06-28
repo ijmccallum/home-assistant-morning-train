@@ -13,6 +13,20 @@ Very specific use case this one - I have a train to catch in the morning and I w
 Get an overview of the project and the tech used.
 Fork, update, PR back in.
 
+### Dev set up locally.
+
+You'll need:
+
+- Git
+- Node
+- Have VS Code (or your preferred editor) (but if you do go with VS Code, there are some recommended plugins in `./.vscode`)
+
+### Get it running
+
+- `npm i` (`npm i --ignore-scripts` if the supply chain attacks are still going)
+- `npm run demo`
+- Open `http://localhost:4000/index.html` - that'll show the UI card and let you plat with it (see `./demo` fo the mock stuff).
+
 ### The tech
 
 #### Frontend
@@ -28,15 +42,6 @@ Fork, update, PR back in.
 - TypeScript
 - Biome
 - Node
-
-### Dev set up locally.
-
-- Install Node
-- Install Git
-- Have VS Code (or your preferred editor) (but if you do go with VS Code, there are some recommended plugins in `./.vscode`)
-- `npm i`
-
-### VS Code plugins, @recommended
 
 ## Troubleshooting
 
@@ -62,27 +67,3 @@ This project uses the MIT License, reason being the [ha-custom-card-rollup-ts-li
 6. Guidance for setting up the national rail integraiton (also move the national rail integration into this repo so it's an all in one?)
 7. Easier HA install process for people looking to use this
 8. Add configuration options: pick train stations
-
-
-Tabs!
-Galaxy Tab A9 - £169
-Lenovo Tab M10 (3rd Gen) - £180 <<<< £146.99
-
-docker run -d \
-  --name grampsweb_celery \
-  --restart always \
-  -p 8091:5000 \
-  -e GRAMPSWEB_TREE="Gramps Web" \
-  -e GRAMPSWEB_CELERY_CONFIG__broker_url=redis://grampsweb_redis:6379/0 \
-  -e GRAMPSWEB_CELERY_CONFIG__result_backend=redis://grampsweb_redis:6379/0 \
-  -e GRAMPSWEB_RATELIMIT_STORAGE_URI=redis://grampsweb_redis:6379/1 \
-  -v /DATA/AppData/gramps/gramps_users:/app/users \
-  -v /DATA/AppData/gramps/gramps_index:/app/indexdir \
-  -v /DATA/AppData/gramps/gramps_thumb_cache:/app/thumbnail_cache \
-  -v /DATA/AppData/gramps/gramps_cache:/app/cache \
-  -v /DATA/AppData/gramps/gramps_secret:/app/secret \
-  -v /DATA/AppData/gramps/gramps_db:/root/.gramps/grampsdb \
-  -v /DATA/AppData/gramps/gramps_media:/app/media \
-  -v /DATA/AppData/gramps/gramps_tmp:/tmp \
-  --link grampsweb_redis \
-  ghcr.io/gramps-project/grampsweb:latest

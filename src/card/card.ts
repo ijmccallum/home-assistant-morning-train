@@ -134,7 +134,7 @@ export class TrainCard extends LitElement {
           if (train.expected === "Cancelled") {
             return html`
               <div class="col-span-4 border-b border-slate-500"></div>
-              <div class="text-red-500 line-through">
+              <div class="text-red-500 line-through col-span-1">
                   ${formatTime(train.scheduled, false)}
               </div>
               <div class="text-red-500 col-span-3">

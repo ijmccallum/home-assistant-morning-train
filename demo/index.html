@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morning Train Card Demo</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: #f4f5f7;
+        color: #1f2937;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(2rem, 2.25vw, 2.5rem);
+      }
+      .panel {
+        display: grid;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+      .panel > * {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 1rem;
+        padding: 1rem;
+      }
+      .form-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+      label {
+        display: grid;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+      }
+      select,
+      input[type="text"],
+      input[type="number"] {
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        padding: 0.75rem 0.85rem;
+        font: inherit;
+      }
+      input[type="checkbox"] {
+        transform: scale(1.1);
+        margin-right: 0.5rem;
+      }
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      #card-container {
+        min-height: 320px;
+      }
+      ha-card {
+        display: block;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 1rem;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Morning Train Card demo</h1>
+      <div class="panel">
+        <section>
+          <h2>Scenario</h2>
+          <div class="form-grid">
+            <label>
+              Select variation
+              <select id="scenario-select">
+                <option value="normal">Normal schedule</option>
+                <option value="delayed">Delayed train</option>
+                <option value="cancelled">Cancelled train</option>
+                <option value="empty">Empty schedule</option>
+                <option value="missing">Missing schedule</option>
+                <option value="no-attributes">No attributes</option>
+              </select>
+            </label>
+            <label>
+              Card title
+              <input id="title-input" type="text" value="Morning train" />
+            </label>
+            <label class="checkbox-row">
+              <input id="show-title" type="checkbox" checked />
+              Show title
+            </label>
+            <label class="checkbox-row">
+              <input id="show-clock" type="checkbox" checked />
+              Show clock
+            </label>
+            <label class="checkbox-row">
+              <input id="show-terminates-at" type="checkbox" checked />
+              Show terminates at
+            </label>
+            <label>
+              Normal walk time (mins)
+              <input id="normal-mins" type="number" value="15" />
+            </label>
+            <label>
+              Rush walk time (mins)
+              <input id="rush-mins" type="number" value="10" />
+            </label>
+            <label>
+              Ideal wait (mins)
+              <input id="ideal-mins" type="number" value="12" />
+            </label>
+            <label>
+              Longest wait (mins)
+              <input id="longest-mins" type="number" value="25" />
+            </label>
+          </div>
+        </section>
+        <section>
+          <h2>Preview</h2>
+          <div id="card-container"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="/morning-train-card.js"></script>
+    <script type="module" src="/demo.js"></script>
+  </body>
+</html>

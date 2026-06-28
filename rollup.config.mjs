@@ -9,7 +9,7 @@ import css from "rollup-plugin-import-css";
 const production = !process.env.ROLLUP_WATCH;
 
 const serveOptions = {
-  contentBase: ["./dist"],
+  contentBase: ["./dist", "./demo"],
   host: "0.0.0.0",
   port: 4000,
   allowCrossOrigin: true,
